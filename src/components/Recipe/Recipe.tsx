@@ -1,24 +1,6 @@
 import React, {FC} from 'react';
 import styles from './recipe.module.css'
-
-export interface IRecipeProps {
-    id: number,
-    name: string,
-    ingredients?: string[],
-    instructions: string[],
-    prepTimeMinutes?: number,
-    cookTimeMinutes?: number,
-    servings?: number,
-    difficulty?: string,
-    cuisine?: string,
-    caloriesPerServing?: number,
-    tags?: string[],
-    userId?: number,
-    image?: string,
-    rating?: number,
-    reviewCount?: number,
-    mealType?: string[]
-}
+import {IRecipeProps} from "../../Models/Recipe";
 
 type IRecipeTypeProps = IRecipeProps & {children?: React.ReactNode};
 
