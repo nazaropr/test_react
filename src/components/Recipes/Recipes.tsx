@@ -5,6 +5,7 @@ import Recipe, {IRecipeProps} from "../Recipe/Recipe";
 const Recipes:FC = () => {
 
     const [recipes, setRecipes] = useState<IRecipeProps[]>([]);
+
     useEffect(()=> {
         fetch('https://dummyjson.com/recipes')
             .then(value => value.json())
