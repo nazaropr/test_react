@@ -1,33 +1,50 @@
-import React from 'react';
-import './App.css';
+import React, {useReducer} from 'react';
 
-interface IState {
-    value: number;
+interface counterState {
+    count: number;
 }
 
+interface counterAction {
+    type: string;
+    payload: number;
+}
+
+const callbackReducer = (state: counterState, action: counterAction): counterState => {
+    switch (action.type) {
+        case 'inc':
+            state.count += 1;
+            return {...state}
+        case 'dec':
+            state.count -= 1;
+            return {...state}
+        case 'res':
+            state.count = 0
+            return {...state}
+    }
+    return {count: -1501500};
+}
+
+
 const App = () => {
-    let [counter, setCounter] = React.useState<IState>({value: 0});
 
+    const [state, dispatch] = useReducer(callbackReducer, {count: 0})
 
-    const increment = () => {
-        setCounter(prevState => ({
-            value: prevState.value + 1
-        }));
-    };
-    const decrement = () => {
-        setCounter(prevState => ({value: prevState.value - 1}));
-    };
-    const reset = () => {
-        setCounter({value: 0});
-    };
     return (
-      <div>
-            <h2>{counter.value}</h2>
-          <button onClick={increment}>increment</button>
-          <button onClick={decrement}>decrement</button>
-          <button onClick={reset}>reset</button>
-      </div>
-  );
+        <div>
+
+
+            <h2>{state.count}</h2>
+            <button onClick={() => {
+                dispatch({type: 'inc', payload: 0});
+            }}>inc</button>
+            <button onClick={() => {
+                dispatch({type: 'dec', payload: 0});
+            }}>dec</button>
+            <button onClick={() => {
+                dispatch({type: 'res', payload: 0});
+            }}>res</button>
+        </div>
+    );
 };
 
 export default App;
