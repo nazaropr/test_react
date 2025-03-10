@@ -1,14 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-
+// useRef зберігає значення змінної але не виконує перерендеринг сторінки при зміні значення змінної
+// (в порівнянні з useState)
+//
 const App = () => {
-  return (
-      <div>
-        
-      </div>
-  );
+
+  const [x, setX] = React.useState(0);
+  const y = React.useRef(0)
+
+    return (
+        <>
+
+            <button onClick={() => {
+                setX((x) => x + 1)
+            }}>change x {x}</button>
+
+            <button onClick={() => {
+                y.current++
+            }}>change y {y.current}</button>
+
+        </>
+    );
 };
 
 export default App;
