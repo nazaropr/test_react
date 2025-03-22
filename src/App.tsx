@@ -1,14 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import FormComponent from "./components/FormComponent";
 
 const App = () => {
-  return (
-      <div>
-        
-      </div>
-  );
+    return (
+        <div>
+            <FormComponent></FormComponent>
+        </div>
+    );
 };
 
 export default App;
