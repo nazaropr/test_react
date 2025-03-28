@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {IUserModel} from "../Models/IUserModel";
+import {IPostModel} from "../Models/IPostModel";
 
 let axiosInstance = axios.create({
     baseURL: 'https://jsonplaceholder.typicode.com',
@@ -9,6 +10,9 @@ let axiosInstance = axios.create({
 const userService = {
     getAllUsers: ():Promise<AxiosResponse<IUserModel[]>> => {
         return axiosInstance.get(`/users`)
+    },
+    getUserPosts: (userId:string): Promise<AxiosResponse<IPostModel[]>> => {
+        return axiosInstance.get(`/users/${userId}/posts`)
     }
 }
 
