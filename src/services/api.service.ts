@@ -38,9 +38,9 @@ const authService = {
 }
 
 const carService = {
-    getAllCars: async () => {
+    getAllCars: async (page: string) => {
         try {
-            const response = await axiosInstance.get<ICarPaginatedModel>('/cars');
+            const response = await axiosInstance.get<ICarPaginatedModel>('/cars', {params: {page: page}});
             return response.data;
         }catch (e) {
             const axiosError = e as AxiosError;
@@ -51,7 +51,7 @@ const carService = {
                     return
                 }
                 await authService.refresh(refreshToken);
-                await carService.getAllCars();
+                await carService.getAllCars(page);
             }
         }
 
