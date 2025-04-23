@@ -12,26 +12,36 @@ const App = () => {
 
     let [users, setUsers] = useState<IUserModel[]>([]);
     let [posts, setPosts] = useState<IPostModel[]>([]);
+    let [favoriteUserState, setFavoriteUserState] = useState<IUserModel | null>(null);
 
     useEffect(() => {
         userService.getUsers().then(value => setUsers(value.data))
         postService.getPosts().then(value => setPosts(value.data))
     }, []);
 
+    const lift = (obj:IUserModel) => {
+        setFavoriteUserState(obj);
+    }
+
+
 
     return (
       <div>
-        <HeaderComponent/>
           <Context.Provider value={{
               userStore:{
-                  allUsers: users
+                allUsers: users,
+                  setFavorite: (obj:IUserModel)=> lift(obj)
               },
               postStore:{
                 allPosts: posts
               }
           }}>
+              <HeaderComponent/>
               <Outlet/>
           </Context.Provider>
+          <hr/>
+            {favoriteUserState && <div>{favoriteUserState.email}</div>}
+          <hr/>
       </div>
   );
 };

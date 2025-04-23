@@ -4,7 +4,8 @@ import {IPostModel} from "../models/IPostModel";
 
 type StoreType = {
     userStore: {
-        allUsers: IUserModel[]
+        allUsers: IUserModel[],
+        setFavorite: (user: IUserModel) => void,
     },
     postStore: {
         allPosts: IPostModel[]
@@ -13,7 +14,8 @@ type StoreType = {
 
 export const defaultValue = {
     userStore: {
-        allUsers: []
+        allUsers: [],
+        setFavorite: (user: IUserModel) => {},
     },
     postStore: {
         allPosts: []
