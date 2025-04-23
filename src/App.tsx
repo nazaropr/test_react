@@ -2,45 +2,25 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import {Outlet} from "react-router-dom";
 import HeaderComponent from "./components/HeaderComponent/HeaderComponent";
-import {Context, defaultValue} from "./context/ContextProvider";
 import {postService, userService} from "./services/api.service";
-import {IUserModel} from "./models/IUserModel";
-import {IPostModel} from "./models/IPostModel";
+import {useStore} from "./context/ContextProvider";
 
 
 const App = () => {
 
-    let [users, setUsers] = useState<IUserModel[]>([]);
-    let [posts, setPosts] = useState<IPostModel[]>([]);
-    let [favoriteUserState, setFavoriteUserState] = useState<IUserModel | null>(null);
+    let {userStore: {loadUsers, favoriteUser}, postStore:{loadPosts}} = useStore();
 
     useEffect(() => {
-        userService.getUsers().then(value => setUsers(value.data))
-        postService.getPosts().then(value => setPosts(value.data))
+        userService.getUsers().then(value => loadUsers(value.data));
+        postService.getPosts().then(value => loadPosts(value.data));
     }, []);
-
-    const lift = (obj:IUserModel) => {
-        setFavoriteUserState(obj);
-    }
-
-
 
     return (
       <div>
-          <Context.Provider value={{
-              userStore:{
-                allUsers: users,
-                  setFavorite: (obj:IUserModel)=> lift(obj)
-              },
-              postStore:{
-                allPosts: posts
-              }
-          }}>
-              <HeaderComponent/>
-              <Outlet/>
-          </Context.Provider>
+          <HeaderComponent/>
+          <Outlet/>
           <hr/>
-            {favoriteUserState && <div>{favoriteUserState.email}</div>}
+            {favoriteUser && <div>{favoriteUser.email}</div>}
           <hr/>
       </div>
   );
