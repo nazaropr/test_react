@@ -1,13 +1,23 @@
 import React from 'react';
 import './App.css';
-import Character from "./components/character/character";
-import Characters from "./components/characters/characters";
-import Recipes from "./components/Recipes/Recipes";
+import {RootState, useAppDispatch, useAppSelector} from "./redux/store";
+import {decrement, increment} from "./redux/slice/slice1";
+
 
 
 const App = () => {
-  return (
-      <Recipes></Recipes>
+  const {value} = useAppSelector((state: RootState) => state.slice1);
+  const dispatch = useAppDispatch();
+    return (
+      <div>
+        <h2>{value}</h2>
+        <button onClick={()=>{
+            dispatch(increment(100))
+        }}>increment</button>
+        <button onClick={()=>{
+            dispatch(decrement())
+        }}>decrement</button>
+      </div>
   );
 };
 
